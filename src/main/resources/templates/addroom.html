@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Neuer Raum</title>
+  <link href="../static/css/bootstrap.min.css" rel="stylesheet"
+        th:href="@{/css/bootstrap.min.css}">
+</head>
+<body>
+<div class="alert alert-warning" id="error-message" th:if="${error} != null" th:text="${error}">
+  Some error message
+</div>
+
+<div >
+  <form method="post" th:action="@{/addroom}" th:object="${roomForm}">
+    <div class="mb-3">
+      <label class="form-label" for="roomName">Welche Raumnummer hat der Raum?</label>
+      <input class="form-control" id="roomName" name="roomName" placeholder="Hörsaal 6J"
+             th:field="*{roomName}" type="text">
+      <small class="text-danger"
+             th:if="${#fields.hasErrors('roomName')}"
+             th:errors="*{roomName}">Name Error</small>
+    </div>
+    <div class="mb-3">
+      <label class="form-label" for="anzahlPlaetze">Wie viele Plätze hat der Raum?</label>
+      <input class="form-control" id="anzahlPlaetze" name="anzahlPlaetze"
+             placeholder="5" th:field="*{anzahlPlaetze}"
+             type="text">
+      <small class="text-danger"
+             th:if="${#fields.hasErrors('anzahlPlaetze')}"
+             th:errors="*{anzahlPlaetze}">Plätze Error</small>
+    </div>
+    <div class="mb-3">
+      <label class="form-label" for="ausstattung">Welche Ausstattung hat der Raum?</label>
+      <input class="form-control" id="ausstattung" name="roomAusstattung" placeholder="Ausstattungsmerkmale mit , trennen!!"
+             th:field="*{ausstattung}" type="text">
+    </div>
+
+    <input class="btn btn-primary" type="submit" value="Füge Raum hinzu">
+  </form>
+</div>
+</body>
+</html>

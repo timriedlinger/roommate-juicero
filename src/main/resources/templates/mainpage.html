@@ -1,0 +1,98 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link th:href="@{/css/bootstrap.min.css}" href="../static/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <style>
+        .link-container a {
+            margin-right: 300px;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+<div class="container pt-3">
+    <h1 th:if="${user}" class="text-center">Roommate</h1>
+
+    <div th:unless="${user}" class="d-flex align-items-center justify-content-center" style="height: 50vh;">
+        <img th:src="@{/img/roommate.png}" src="../static/img/roommate.png" alt="Roommate Logo">
+    </div>
+
+    <div class="link-container">
+        <a th:if="${user}" href="/addroom">Hier klicken, um einen Raum hinzuzufügen</a>
+        <a th:if="${user}" href="/deleteroom">Hier klicken, um einen Raum zu bearbeiten/löschen</a>
+    </div>
+
+    <div th:if="${user}">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Raum</th>
+                <th>Anzahl Plätze</th>
+                <th>Details</th>
+            </tr>
+            </thead>
+            <tbody th:remove="all-but-first">
+            <tr th:each="room: ${rooms}" th:object="${room}">
+                <td>
+                    <span th:text="*{raumNummer}"> Mensa </span>
+                </td>
+                <td>
+                    <span th:text="*{anzahlPlaetze}"> 120 </span>
+                </td>
+                <td><a th:href="@{/room/{id}(id=*{raumNummer})}" href="#">Zu den Details</a>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span> 25.23.02.13 </span>
+                </td>
+                <td>
+                    <span> 4 </span>
+                </td>
+                <td>
+                    <a href="#">Zu den Details</a>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span> 6J </span>
+                </td>
+                <td>
+                    <span> 200 </span>
+                </td>
+                <td>
+                    <a href="#">Zu den Details</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <form class="fixed-top m-2" th:unless="${user}" th:action="@{/oauth2/authorization/github}" method="post">
+        <div class="form-group float right">
+            <label>Login using:</label>
+            <button type="submit" class="btn btn-primary">GitHub</button>
+        </div>
+    </form>
+
+    <p class="text-center" th:unless="${user}">Roommate ist ein tolles Program mit dem man Arbeitsplätze in der Uni buchen kann.
+        <br>Logge dich jetzt oben links mithilfe deines GitHub accounts ein!
+    </p>
+
+    <div th:if="${user}" class="text-center row m-3">
+        <form th:action="@{/logout}" method="post">
+            <input class="btn btn-dark" type="submit" value="Logout">
+        </form>
+    </div>
+
+    <p th:if="${user}"> Sie sind <a href="/admin">Admin?</a></p>
+
+</div>
+</body>

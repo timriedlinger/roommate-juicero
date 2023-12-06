@@ -1,0 +1,18 @@
+server:
+  port: 8080
+
+
+
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          github:
+            client-id: ${CLIENT_ID}
+            client-secret: ${CLIENT_SECRET}
+
+
+rover:
+  rollen:
+    admin: bendisposto, Lahutar, jaste111
